@@ -40,7 +40,6 @@ int notifier(struct notifier_block *block, unsigned long code, void *p)
         res = nlmsg_unicast(nl_sk, skb_out, pid); 
         if(res < 0)
             printk(KERN_INFO "Error while sending back to user\n");
-
     }
     return 1;
 }
