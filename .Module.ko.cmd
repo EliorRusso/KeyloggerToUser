@@ -1,0 +1,1 @@
+cmd_/home/elior/Documents/Ky/Module.ko := ld -r -m elf_x86_64 --build-id=sha1  -T scripts/module.lds -o /home/elior/Documents/Ky/Module.ko /home/elior/Documents/Ky/Module.o /home/elior/Documents/Ky/Module.mod.o;  true
