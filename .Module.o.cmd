@@ -18,7 +18,6 @@ deps_/home/elior/Documents/Ky/Module.o := \
     $(wildcard include/config/ARCH_USE_BUILTIN_BSWAP) \
     $(wildcard include/config/KCOV) \
   /home/elior/Documents/Ky/Module.h \
-    $(wildcard include/config/X86_64) \
   include/linux/module.h \
     $(wildcard include/config/MODULES) \
     $(wildcard include/config/SYSFS) \
@@ -107,6 +106,7 @@ deps_/home/elior/Documents/Ky/Module.o := \
     $(wildcard include/config/KCSAN) \
     $(wildcard include/config/KCSAN_IGNORE_ATOMICS) \
   arch/x86/include/asm/linkage.h \
+    $(wildcard include/config/X86_64) \
     $(wildcard include/config/X86_ALIGNMENT_16) \
   include/linux/bitops.h \
   include/linux/bits.h \

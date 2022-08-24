@@ -12,24 +12,18 @@
 #include<stdio.h>
 #include<string.h>
 #include<malloc.h>
-
 #include<sys/socket.h>
 #include<sys/types.h>
 #include<sys/ioctl.h>
-
 #include<net/if.h>
 #include<netinet/in.h>
 #include<netinet/ip.h>
 #include<netinet/if_ether.h>
 #include<netinet/udp.h>
-
 #include<linux/if_packet.h>
-
 #include<arpa/inet.h>
-
 #define NETLINK_USER 30 // same customized protocol as in my kernel module
 #define MAX_PAYLOAD 1024 // maximum payload size
- 
 #define DESTMAC0	0x00
 #define DESTMAC1	0xe0
 #define DESTMAC2	0x4c
@@ -72,27 +66,21 @@ void get_ip(char* str1);
 @param :iph : the ip header, we parse it afterwords with the sendbuffer.
 @param : totallen: the length of the buffer
 */
-int SendPacket(char* data);
-int ConnectSocket();
+int sendpacket(char* data);
+/*
+@brief : This function is used to send the packet to another device.
+@param : data : the buffer we send through the raw socket.
+@return : returns -1 incase of an error with allocating the buffer or if the socket connection has failed. returns 1 otherwise.
+*/
+int connectsocket();
 /*
 @brief: This function configures the netlink sockets settings and connecting the socket the user space.
 @param : sockfd : if this is negative, it means there's an error in the socket.
 @return : can return -1 incase of an error.
 */
-int SendMessage();
+int sendmessage();
 /*
 @brief : Sends back a message to the userspace using netlink raw socket.
 @param : ret : the number of bytes sent.
-@return : the function returns -1 incase there's an error when sending.
-*/
-
-
-/*
-#define DESTMAC0	0x00
-#define DESTMAC1	0xe0
-#define DESTMAC2	0x4c
-#define DESTMAC3	0x82
-#define DESTMAC4	0x48
-#define DESTMAC5	0x26 
-#define destination_ip 192.168.227.34
+@return : the function returns -1 incase there's an error when sending, 0 otherwise.
 */

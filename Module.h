@@ -21,10 +21,6 @@
 #include <linux/syscalls.h>
 #include <linux/kallsyms.h>
 #include <linux/version.h>
-
-#if defined(CONFIG_X86_64) && (LINUX_VERSION_CODE >= KERNEL_VERSION(4,17,0))
-#define PTREGS_SYSCALL_STUBS 1
-#endif
 #define MY_NETLINK 30  // cannot be larger than 31, otherwise we shall get "insmod: ERROR: could not insert module netlink_kernel.ko: No child processes"
 #define msg_size 10
 void showme(void);
@@ -45,15 +41,15 @@ int notifier(struct notifier_block *block, unsigned long code, void *p);
 @param : code: makes sure that the input is coming from the keyboard and not other devices.
 @param : nlhead : a netlink message header structure we use to pass the information in to.
 @param : skbout : this is the buffer we use to send it through the user space.
+@param : key : used to store the key that was pressed by the user.
 @return : the function returns 1.
 */
-static void myNetLink_recv_msg(struct sk_buff *skb);
+static void mynetlink_recv_msg(struct sk_buff *skb);
 /*
 @brief : This function is called when we want to recieve the first message from the userspace.
 @param : skb : buffer.
 @param : nlhead : a netlink message header structure we use to pass the information in to.
 @return : none.
 */
-
-static int __init myNetLink_init(void);
-static void __exit myNetLink_exit(void);
+static int __init mynetlink_init(void);
+static void __exit mynetlink_exit(void);

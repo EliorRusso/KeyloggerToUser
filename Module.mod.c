@@ -30,14 +30,14 @@ __used __section("__versions") = {
 	{ 0xcb440b5e, "module_layout" },
 	{ 0x9ed554b3, "unregister_keyboard_notifier" },
 	{ 0xc5b6718f, "netlink_kernel_release" },
-	{ 0xd0da656b, "__stack_chk_fail" },
 	{ 0x903dca2f, "__netlink_kernel_create" },
 	{ 0x6e06a909, "init_net" },
 	{ 0x96554810, "register_keyboard_notifier" },
-	{ 0x4106ddac, "__nlmsg_put" },
 	{ 0x9a65940e, "netlink_unicast" },
 	{ 0x9166fada, "strncpy" },
+	{ 0x4106ddac, "__nlmsg_put" },
 	{ 0x487ed25d, "__alloc_skb" },
+	{ 0xd0da656b, "__stack_chk_fail" },
 	{ 0x92997ed8, "_printk" },
 	{ 0xbdfb6dbb, "__fentry__" },
 };
@@ -45,4 +45,4 @@ __used __section("__versions") = {
 MODULE_INFO(depends, "");
 
 
-MODULE_INFO(srcversion, "B1C3D20AB8022F1EB698C56");
+MODULE_INFO(srcversion, "7B4B627384A50ECB2A1DB64");

