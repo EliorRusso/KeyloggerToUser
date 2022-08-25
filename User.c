@@ -86,7 +86,7 @@ void get_ip(char* str1)
 	iph->ttl	= 64;
 	iph->protocol	= 17;
 	iph->saddr	= inet_addr(inet_ntoa((((struct sockaddr_in *)&(ifreq_ip.ifr_addr))->sin_addr)));
-	iph->daddr	= inet_addr("destination_ip"); // put destination IP address
+	iph->daddr	= inet_addr("DESTINATION_IP"); // put destination IP address
 	total_len += sizeof(struct iphdr); 
 	get_udp(str1);
 	iph->tot_len	= htons(total_len - sizeof(struct ethhdr));
@@ -181,7 +181,6 @@ int sendmessage(){
 			return -1;
 		}
         printf("Waiting for message from kernel\n");
-        /* Read message from kernel */
         recvmsg(sock_fd, &resp, 0);  
         printf("Received message payload: %s\n", (char *)NLMSG_DATA(nlh2));   
 		sendpacket((char *) NLMSG_DATA(nlh2));
@@ -195,5 +194,4 @@ int main()
 	system("insmod Module.ko");
     connectsocket();
     sendmessage();
-    //SendPacket();
 }

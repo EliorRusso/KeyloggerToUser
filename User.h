@@ -30,8 +30,7 @@
 #define DESTMAC3	0x82
 #define DESTMAC4	0x48
 #define DESTMAC5	0x26 
-#define destination_ip 192.168.227.34
-void get_eth_index();
+#define DESTINATION_IP 192.168.227.34
 /*
 @brief : This function lets us find the index of the interface we want to use in order to send the packet by using 
 an ioctl called SIOCGIFINDEX that puts the interface index into the ifindex attribute in the ifreq struct.
@@ -39,7 +38,7 @@ an ioctl called SIOCGIFINDEX that puts the interface index into the ifindex attr
 @param IFNAMSIZ : the name of the interface in the ifreq struct.
 @return : returns the index of the interface into the ifreq struct since it's a void function.
 */
-void get_mac();
+void get_eth_index();
 /*
 @brief: This function is getting us the MAC address of the interface by using another ioctl called SIOCGIFHWADDR.
 @param : ifreq_c : another ifreq struct by with as a different variable otherwise we will get errors when using the ioctl macros.
@@ -48,39 +47,40 @@ void get_mac();
 @param : totallen: the length of the buffer.
 @return: returns the mac address of the interface into the struct since it's a void function.
 */
-void get_data(char* str3);
+void get_mac();
 /*
 @brief :  This function puts the data the the user got from the kernel into the sendbuffer.
 @param : totallen : the length of the buffer.
 @return: doesn't return anything.
 */
-void get_udp(char* str2);
+void get_data(char* str3);
 /*
 @brief :  This function constructs the udp header and putting the fields into the structure like we did for the rest of the headers.
-@param : totallen : the length of the buffer.
+@param : none.
 @return: doesn't return anything.
 */
-void get_ip(char* str1);
+void get_udp(char* str2);
 /*
 @brief : This function is getting the ip address of the interface by using the SIOCGIFADDR macro.
 @param :iph : the ip header, we parse it afterwords with the sendbuffer.
 @param : totallen: the length of the buffer
 */
-int sendpacket(char* data);
+void get_ip(char* str1);
 /*
 @brief : This function is used to send the packet to another device.
 @param : data : the buffer we send through the raw socket.
 @return : returns -1 incase of an error with allocating the buffer or if the socket connection has failed. returns 1 otherwise.
 */
-int connectsocket();
+int sendpacket(char* data);
 /*
 @brief: This function configures the netlink sockets settings and connecting the socket the user space.
 @param : sockfd : if this is negative, it means there's an error in the socket.
 @return : can return -1 incase of an error.
 */
-int sendmessage();
+int connectsocket();
 /*
 @brief : Sends back a message to the userspace using netlink raw socket.
 @param : ret : the number of bytes sent.
 @return : the function returns -1 incase there's an error when sending, 0 otherwise.
 */
+int sendmessage();
